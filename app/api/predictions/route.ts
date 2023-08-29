@@ -83,11 +83,11 @@ export async function POST(req, res) {
   return NextResponse.json(prediction, { status: 201 });
 }
 
-export const config = {
-  // runtime: "edge",
-  api: {
-    bodyParser: {
-      sizeLimit: "10mb",
-    },
-  },
-};
+// export const config = {
+//   // runtime: "edge",
+//   api: {
+//     bodyParser: {
+//       sizeLimit: "10mb",
+//     },
+//   },
+// };
