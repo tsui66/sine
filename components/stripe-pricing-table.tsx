@@ -21,7 +21,7 @@ export const StripePricingTable = ({
                 src="https://js.stripe.com/v3/pricing-table.js"
             ></Script>
 
-            {theme === "light" ? (
+            {true ? (
                 <>
                     {/* @ts-ignore */}
                     <stripe-pricing-table
