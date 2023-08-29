@@ -128,7 +128,7 @@ export default async function IndexPage() {
           </h2>
           <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
             Sine is packed with features to help you create the
-            pixel art you want with ease.
+            NFT art you want with ease.
           </p>
         </div>
         <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3">

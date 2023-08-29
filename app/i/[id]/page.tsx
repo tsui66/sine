@@ -31,14 +31,14 @@ export async function generateMetadata({
                 ? photo?.generation.prompt?.slice(0, 45) + "..."
                 : photo?.generation.prompt,
         description:
-            "This pixel art image was generated using AI. If you want to generate your own, try Sine.",
+            "Create NFT Art with Artificial Intelligence. If you want to generate your own, try Sine.",
         openGraph: {
             title:
                 photo?.generation.prompt?.length > 45
                     ? photo?.generation.prompt?.slice(0, 45) + "..."
                     : photo?.generation.prompt,
             description:
-                "This pixel art image was generated using AI. If you want to generate your own, try Sine.",
+                "Create NFT Art with Artificial Intelligence. If you want to generate your own, try Sine.",
             images: [photo?.pixelatedImage ?? ""],
         },
         twitter: {
@@ -48,9 +48,9 @@ export async function generateMetadata({
                     ? photo?.generation.prompt?.slice(0, 45) + "..."
                     : photo?.generation.prompt,
             description:
-                "This pixel art image was generated using AI. If you want to generate your own, try Sine.",
+                "Create NFT Art with Artificial Intelligence. If you want to generate your own, try Sine.",
             images: [photo?.pixelatedImage ?? ""],
-            creator: "@dparksdev",
+            creator: "@tsui_nova",
         },
     }
 }

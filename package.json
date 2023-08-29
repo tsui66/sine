@@ -3,8 +3,8 @@
     "version": "0.2.0",
     "private": true,
     "author": {
-        "name": "David Parks",
-        "url": "https://twitter.com/dparksdev"
+        "name": "Nova Tsui",
+        "url": "https://twitter.com/tsui_nova"
     },
     "scripts": {
         "dev": "concurrently --kill-others \"next dev \" \"prisma studio --browser none\" \"email dev --port 3333\"",

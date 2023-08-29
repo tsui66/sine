@@ -76,9 +76,6 @@ We love our contributors! Here's how you can contribute:
   <img src="https://contrib.rocks/image?repo=davidtparks/sine" />
 </a>
 
-## Author
-
-- David Parks([@dparksdev](https://twitter.com/dparksdev))
 
 ## License
 
