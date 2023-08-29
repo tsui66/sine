@@ -48,36 +48,34 @@ export default function WelcomeEmail({
               Thanks for signing up{name && `, ${name}`}!
             </Text>
             <Text className="text-sm leading-6 text-black">
-              My name is Steven, and I'm the founder of Dub - the link
-              management tool for modern marketing teams. I'm excited to have
+              My name is Tsui, and I'm the founder of Sine - easiest way to start creating NFT Art using Artificial Intelligence. Start creating in minutes! I'm excited to have
               you on board!
             </Text>
             <Text className="text-sm leading-6 text-black">
               Here are a few things you can do:
             </Text>
             <Text className="ml-1 text-sm leading-4 text-black">
-              ◆ Create a{" "}
+              ◆
               <Link
-                href="https://app.tl.ink/links"
+                href="https://sine.at/tools/sketch"
                 className="font-medium text-blue-600 no-underline"
               >
-                tl.ink short link
+                AI Sketch Refine
               </Link>
             </Text>
             <Text className="ml-1 text-sm leading-4 text-black">
-              ◆ Create a{" "}
+              ◆
               <Link
-                href="https://app.tl.ink"
+                href="https://sine.at/tools/nft-generator"
                 className="font-medium text-blue-600 no-underline"
               >
-                new project
+                AI NFT Generator
               </Link>{" "}
-              and add your custom domain
             </Text>
             <Text className="ml-1 text-sm leading-4 text-black">
               ◆ Follow us on{" "}
               <Link
-                href="https://twitter.com/dubdotsh"
+                href="https://twitter.com/tsui_nova"
                 className="font-medium text-blue-600 no-underline"
               >
                 Twitter
@@ -88,7 +86,7 @@ export default function WelcomeEmail({
               happy to help!
             </Text>
             <Text className="text-sm font-light leading-6 text-gray-400">
-              Steven from Dub
+              Tsui from ~Sine~
             </Text>
 
             <Footer email={email} marketing />

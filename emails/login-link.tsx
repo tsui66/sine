@@ -42,7 +42,7 @@ export default function LoginLink({
               Your Login Link
             </Heading>
             <Text className="text-sm leading-6 text-black">
-              Welcome to Sine!
+              Welcome to ~Sine~!
             </Text>
             <Text className="text-sm leading-6 text-black">
               Please click the magic link below to sign in to your account.
