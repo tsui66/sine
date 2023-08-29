@@ -1,0 +1,103 @@
+'use client'
+import * as React from "react";
+import { useEffect } from "react";
+import { ReactSketchCanvas } from "react-sketch-canvas";
+import { Button, buttonVariants } from "@/components/ui/button"
+
+
+import { Undo as UndoIcon, Trash as TrashIcon } from "lucide-react";
+// import { CounterClockwiseClockIcon } from "@radix-ui/react-icons"
+
+export function Canvas({
+  startingPaths,
+  onScribble,
+  scribbleExists,
+  setScribbleExists,
+}) {
+  const canvasRef = React.useRef(null);
+
+  useEffect(() => {
+    // Hack to work around Firfox bug in react-sketch-canvas
+    // https://github.com/vinothpandian/react-sketch-canvas/issues/54
+    document
+      .querySelector("#react-sketch-canvas__stroke-group-0")
+      ?.removeAttribute("mask");
+
+    loadStartingPaths();
+  }, []);
+
+  async function loadStartingPaths() {
+    await canvasRef.current.loadPaths(startingPaths);
+    setScribbleExists(true);
+    onChange();
+  }
+
+  const onChange = async () => {
+    const paths = await canvasRef.current.exportPaths();
+    localStorage.setItem("paths", JSON.stringify(paths, null, 2));
+
+    if (!paths.length) return;
+
+    setScribbleExists(true);
+
+    const data = await canvasRef.current.exportImage("png");
+    onScribble(data);
+  };
+
+  const undo = () => {
+    canvasRef.current.undo();
+  };
+
+  const reset = () => {
+    setScribbleExists(false);
+    canvasRef.current.resetCanvas();
+  };
+
+  return (
+    <div className="relative space-y-4">
+      {scribbleExists || (
+        <div>
+          <div className="absolute grid w-full h-full p-3 place-items-center pointer-events-none text-xl">
+            <span className="opacity-40">Draw something here.</span>
+          </div>
+        </div>
+      )}
+
+      <ReactSketchCanvas
+        ref={canvasRef}
+        className="w-full aspect-square border-none cursor-crosshair"
+        strokeWidth={4}
+        strokeColor="black"
+        onChange={onChange}
+        withTimestamp={true}
+      />
+
+      {scribbleExists && (
+        // <div className="animate-in fade-in duration-700 text-left">
+        //   <button className="lil-button" onClick={undo}>
+        //     <UndoIcon className="icon" />
+        //     Undo
+        //   </button>
+        //   <button className="lil-button" onClick={reset}>
+        //     <TrashIcon className="icon" />
+        //     Clear
+        //   </button>
+        // </div>
+        <div className="flex flex-row items-center animate-in fade-in space-x-4">
+          <div className="basis-1/3">
+            <Button onClick={undo}>
+              <span className="sr-only">Undo</span>
+              <UndoIcon className="h-4 w-4" />
+            </Button>
+          </div>
+          <div className="basis-1/3">
+            <Button variant="secondary" onClick={reset}>
+              <span className="sr-only">Clear</span>
+              <TrashIcon className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

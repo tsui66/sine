@@ -1,0 +1,196 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  directUrl    = env("DIRECT_URL")
+  relationMode = "prisma"
+}
+
+model Account {
+  id                String   @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?  @db.Text
+  access_token      String?  @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?  @db.Text
+  session_state     String?
+  createdAt         DateTime @default(now()) @map(name: "created_at")
+  updatedAt         DateTime @default(now()) @map(name: "updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map(name: "accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map(name: "sessions")
+}
+
+model User {
+  id            String       @id @default(cuid())
+  name          String?
+  email         String?      @unique
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime     @default(now()) @map(name: "created_at")
+  updatedAt     DateTime     @default(now()) @map(name: "updated_at")
+  purchases     Purchase[]
+  accounts      Account[]
+  sessions      Session[]
+  generations   Generation[]
+
+  usersReferred User[] @relation("ReferrerToUser")
+
+  referredByUserId String?
+  referredByUser   User?   @relation("ReferrerToUser", fields: [referredByUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  credits                   Int @default(0)
+  feedbackCreditsGranted    Int @default(0)
+  creditsEarnedViaReferrals Int @default(0)
+
+  stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
+  stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
+  stripePriceId          String?   @map(name: "stripe_price_id")
+  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
+
+  @@index([referredByUserId])
+  @@map(name: "users")
+}
+
+model Generation {
+  id                String              @id @default(cuid())
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  userId            String
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  modelId           String
+  inferenceId       String
+  prompt            String              @db.Text
+  outputImages      OutputImage[]
+  image             String?
+  mask              String?
+  structure         String?
+  numInferenceSteps Int                 @default(50)
+  pixelSize         Int                 @default(8)
+  modality          String?
+  seed              String?
+  strength          Float?
+  negativePrompt    String?
+  guidance          Float?              @default(7.5)
+  numSamples        Int                 @default(4)
+  width             Int?                @default(512)
+  height            Int?                @default(512)
+  type              String?             @default("txt2img")
+  favorites         Int                 @default(0)
+  status            GENERATIONSTATUS    @default(PROCESSING)
+  webhookToken      String?
+  feedback          GenerationFeedback?
+
+  colorPaletteEnabled Boolean @default(false)
+  colors              Json?
+
+  platform     String    @default("SCENARIO")
+  // replicate
+  input        Json?
+  output       Json?
+  // status       String?
+  // created_at   DateTime?
+  // started_at   DateTime?
+  completed_at DateTime?
+  version      String?
+  metrics      Json?
+  error        String?
+  logs         String?   @db.Text
+
+  @@unique([inferenceId, modelId], name: "uniqueGeneration")
+  @@index([inferenceId, webhookToken])
+  @@index([platform])
+  @@index([userId])
+  @@index([modelId])
+}
+
+model GenerationFeedback {
+  id           String                 @id @default(cuid())
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+  satisfaction GENERATIONSATISFCATION @default(NOOPINION)
+  comment      String                 @db.Text
+
+  generationId String     @unique
+  generation   Generation @relation(fields: [generationId], references: [id], onDelete: Cascade)
+}
+
+enum GENERATIONSTATUS {
+  PROCESSING
+  COMPLETE
+  FAILED
+  TIMEOUT
+}
+
+enum GENERATIONSATISFCATION {
+  NOOPINION
+  SATISFIED
+  UNSATISFIED
+}
+
+enum PLATFORM {
+  SCENARIO
+  REPLICATE
+}
+
+model OutputImage {
+  id              String     @id @default(cuid())
+  scenarioImageId String?
+  createdAt       DateTime   @default(now()) @map(name: "created_at")
+  updatedAt       DateTime   @default(now()) @map(name: "updated_at")
+  image           String?    @db.Text
+  pixelatedImage  String     @db.Text
+  upscaledImage   String?    @db.Text
+  seed            String?    @db.Text
+  generationId    String
+  generation      Generation @relation(fields: [generationId], references: [id], onDelete: Cascade)
+
+  @@index([generationId])
+}
+
+model Purchase {
+  id                     String    @id @default(cuid())
+  userId                 String
+  user                   User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  creditAmount           Int
+  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map(name: "verification_tokens")
+}
