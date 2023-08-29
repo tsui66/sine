@@ -22,7 +22,7 @@ interface IImageOPtions {
     imageId: string
     src: string
     name: string
-    dsiableRemoveBG: boolean
+    dsiableRemoveBG?: boolean
 }
 
 export function ImageOptions({ imageId, src, name, dsiableRemoveBG }: IImageOPtions) {

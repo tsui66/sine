@@ -224,7 +224,7 @@ export const GenerationSet = ({
                                         />
                                         <div className="absolute top-2 right-2 z-10">
                                             <ImageOptions
-                                                name={image.seed}
+                                                name={image.seed!}
                                                 imageId={image.id}
                                                 src={image.pixelatedImage}
                                             />
