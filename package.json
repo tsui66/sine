@@ -79,7 +79,7 @@
         "formik": "^2.2.9",
         "framer-motion": "^10.12.4",
         "jimp": "^0.22.7",
-        "lucide-react": "^0.268.0",
+        "lucide-react": "^0.244.0",
         "mailing-core": "^0.9.15",
         "mitt": "^3.0.1",
         "naughty-words": "^1.2.0",
