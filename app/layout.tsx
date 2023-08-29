@@ -13,7 +13,7 @@ const fontSans = FontSans({
     variable: "--font-satoshi",
 })
 
-// Font files can be colocated inside of `pages`
+// Font files can be colocated inside of `pages`：q
 const fontHeading = localFont({
     src: "../assets/fonts/Satoshi-Variable.woff2",
     variable: "--font-heading",
@@ -86,12 +86,16 @@ export default function RootLayout({ children }: RootLayoutProps) {
                     fontHeading.variable
                 )}
             >
-                <Script
-                    async
-                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8869788898421299"
-                    crossOrigin="anonymous"
-                    strategy="beforeInteractive"
-                />
+                <Script src="https://www.googletagmanager.com/gtag/js?id=G-MDVWXRQVWK" />
+                <Script id="google-analytics">
+                    {`
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+            
+                    gtag('config', 'G-MDVWXRQVWK');
+                    `}
+                </Script>
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="light"
