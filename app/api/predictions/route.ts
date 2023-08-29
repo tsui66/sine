@@ -33,11 +33,9 @@ export async function POST(req, res) {
   }
 
   const user = await getCurrentUser()
-  console.log(user, '...sese...')
 
   const input = await getObjectFromRequestBodyStream(req.body);
 
-  console.log(input, 'inputinputinput', `${WEBHOOK_HOST}/api/replicate-webhook`)
   const webhookToken = crypto.randomUUID();
   const prediction = await replicate.predictions.create(
     {
@@ -76,9 +74,6 @@ export async function POST(req, res) {
       },
     })
   }
-
-  console.log(prediction, 'predictionpredictionprediction')
-
 
   return NextResponse.json(prediction, { status: 201 });
 }

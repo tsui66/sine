@@ -2,7 +2,6 @@ import va from "@vercel/analytics"
 
 export async function downloadImage(url: string, imageName: string) {
 
-    console.log(url, imageName, '...urlurlurlurlurl')
     va.track("downloadImageSelected", {
         url,
         imageName,

@@ -45,7 +45,6 @@ async function upsertPrediction(predictionData, userId, token) {
   //   [0]     "get": "https://api.replicate.com/v1/predictions/rmwcdwtbqvyhsuegfzjx32niqu"
   //   [0]   }
   //   [0] } ....predictionDatapredictionDatapredictionData
-  console.log(predictionData, 'predictionDatapredictionData')
   try {
     if (predictionData?.status === "succeeded") {
       const generationOutput = predictionData.output as string[];
