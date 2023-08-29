@@ -94,7 +94,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 />
                 <ThemeProvider
                     attribute="class"
-                    defaultTheme="system"
+                    defaultTheme="light"
                     enableSystem
                 >
                     {/* <div className="w-full flex justify-center items-center py-2 px-4 text-center bg-primary-foreground">
