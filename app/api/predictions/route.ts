@@ -23,7 +23,7 @@ async function getObjectFromRequestBodyStream(body) {
   return JSON.parse(string);
 }
 
-const WEBHOOK_HOST = process.env.VERCEL_URL
+const WEBHOOK_HOST = process.env.NEXT_PUBLIC_APP_URL
 
 export async function POST(req, res) {
   if (!process.env.REPLICATE_API_TOKEN) {
