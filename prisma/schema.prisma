@@ -8,8 +8,10 @@ generator client {
 
 datasource db {
   provider     = "postgresql"
-  url          = env("DATABASE_URL")
-  directUrl    = env("DIRECT_URL")
+  // url          = env("DATABASE_URL")
+  // url          = env("DATABASE_URL")
+  url          = env("POSTGRES_PRISMA_URL")
+  directUrl    = env("POSTGRES_URL_NON_POOLING")
   relationMode = "prisma"
 }
 
@@ -110,18 +112,7 @@ model Generation {
   colorPaletteEnabled Boolean @default(false)
   colors              Json?
 
-  platform     String    @default("SCENARIO")
-  // replicate
-  input        Json?
-  output       Json?
-  // status       String?
-  // created_at   DateTime?
-  // started_at   DateTime?
-  completed_at DateTime?
-  version      String?
-  metrics      Json?
-  error        String?
-  logs         String?   @db.Text
+  platform String @default("SCENARIO")
 
   @@unique([inferenceId, modelId], name: "uniqueGeneration")
   @@index([inferenceId, webhookToken])
