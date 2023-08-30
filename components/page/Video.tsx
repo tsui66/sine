@@ -7,7 +7,7 @@ const VideoSection = () => {
       <div className="overflow-hidden rounded-lg border border-neutral-900">
         <video controls autoPlay muted loop width="100%">
           <source
-            src="https://6mzw22jwifjswwua.public.blob.vercel-storage.com/LJtx4lN-jnqSxy8s2smG7EDjz0sk3RVfQDNbf3.mp4"
+            src="https://pub-b7c9da47e9a54cfea35a51985febc6d9.r2.dev/sine-demo.mp4"
             type="video/webm"
           />
         </video>
